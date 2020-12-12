@@ -21,11 +21,12 @@ public class AdminPage {
     public JTextField textField_6;
     public JTextField textField_7;
     public JTextField textField_8;
-
+    public String name;
     /**
      * Create the application.
      */
-    public AdminPage() {
+    public AdminPage(String name) {
+        this.name = name;
         initialize();
     }
 
@@ -280,13 +281,16 @@ public class AdminPage {
         btnNewButton_1_1.addActionListener(e -> {
             DBConnection conn = null;
             String a = textField_8.getText();
-            try {
-                conn = new DBConnection(readConfig(null));
-                admn.deleteUser(conn,a);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            if (!a.equals(name)) {
+                try {
+                    conn = new DBConnection(readConfig(null));
+                    admn.deleteUser(conn, a);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                conn.close();
             }
-            conn.close();
+            else PopupMessage.error("Cannot Delete Self");
 
         });
         btnNewButton_1_1.setBounds(147, 144, 89, 23);

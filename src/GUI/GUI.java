@@ -14,7 +14,6 @@ public class GUI {
     private JFrame frame;
     private JTextField textField;
     private JPasswordField passwordField;
-
     /**
      * Launch the application.
      */
@@ -34,7 +33,7 @@ public class GUI {
                 database_connection.close();
             }
         }
-        var window = new GUI();
+        GUI window = new GUI();
         window.frame.setVisible(true);
     }
 
@@ -91,21 +90,21 @@ public class GUI {
                     System.out.println("done");
                     if (role == 1){
                         System.out.println("Admin");
-                        var windowx = new AdminPage();
+                        AdminPage windowx = new AdminPage(textField.getText());
                         windowx.frame.setVisible(true);
                         frame.setVisible(false);
                         conn.close();
                     }
                     else if (role == 2){
                         System.out.println("Manager");
-                        var windowx = new ManagerPage();
+                        ManagerPage windowx = new ManagerPage();
                         windowx.frame.setVisible(true);
                         frame.setVisible(false);
                         conn.close();
                     }
                     else if (role == 3){
                         System.out.println("Salesman");
-                        var windowx = new SalesmanPage();
+                        SalesmanPage windowx = new SalesmanPage();
                         windowx.frame.setVisible(true);
                         frame.setVisible(false);
                         conn.close();
@@ -123,10 +122,10 @@ public class GUI {
 
 
     public boolean Login(DBConnection conn, String userName , char[] pass) throws SQLException {
-        var x = conn.send_query("SELECT username from Users where username='"+ userName +"'");
+        ResultSet x = conn.send_query("SELECT username from Users where username='"+ userName +"'");
         if (x.isBeforeFirst()) {
             if (!x.getString(1).equals("")) {
-                var y = conn.send_query("SELECT password from Users where username='" + userName + "'").getString(1);
+                String y = conn.send_query("SELECT password from Users where username='" + userName + "'").getString(1);
                 return (String.copyValueOf(pass).equals(y));
             }
 
@@ -134,7 +133,7 @@ public class GUI {
         return false;
     }
     public int getRole(DBConnection conn, String userName) throws SQLException {
-        var x = conn.send_query("SELECT role from Users where username='"+ userName +"'");
+        ResultSet x = conn.send_query("SELECT role from Users where username='"+ userName +"'");
         return x.getInt(1);
     }
 

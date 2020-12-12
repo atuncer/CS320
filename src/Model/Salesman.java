@@ -6,11 +6,7 @@ import java.sql.SQLException;
 public class Salesman {
     public Salesman(){}
 
-    public <T> String sellProduct(DBConnection conn,String name,T count1) throws SQLException {
-        if (!(count1 instanceof Integer)){
-            return "Enter a proper value";
-        }//TODO İşe yaramıyo xd
-        int count = (int)count1;
+    public String sellProduct(DBConnection conn,String name,int count) throws SQLException {
 
         ResultSet resultSet = conn.send_query("SELECT * FROM products WHERE name = '"+name+"'");
         if (!resultSet.isBeforeFirst() ) {  return "No Item called " + name; }
